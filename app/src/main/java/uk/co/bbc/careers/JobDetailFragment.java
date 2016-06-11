@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.net.URL;
+
 /**
  * A fragment representing a single Job detail screen.
  * This fragment is either contained in a {@link JobListActivity}
@@ -32,6 +34,10 @@ public class JobDetailFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public JobDetailFragment() {
+    }
+
+    public URL getURL() {
+        return mJob.url;
     }
 
     @Override

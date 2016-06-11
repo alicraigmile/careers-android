@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import java.net.URISyntaxException;
+import java.net.URL;
+
 /**
  * An activity representing a single Job detail screen. This
  * activity is only used narrow width devices. On tablet-size devices,
@@ -18,6 +21,8 @@ import android.view.MenuItem;
  * in a {@link JobListActivity}.
  */
 public class JobDetailActivity extends AppCompatActivity {
+
+    JobDetailFragment mFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +36,12 @@ public class JobDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String url = "http://www.example.com";
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
+                i.setData(Uri.parse(mFragment.getURL().toString()));
                 startActivity(i);
 
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
             }
         });
 
@@ -62,10 +66,11 @@ public class JobDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             arguments.putInt(JobDetailFragment.ARG_ITEM_ID,
                     getIntent().getIntExtra(String.valueOf(JobDetailFragment.ARG_ITEM_ID),0));
-            JobDetailFragment fragment = new JobDetailFragment();
-            fragment.setArguments(arguments);
+
+            mFragment = new JobDetailFragment();
+            mFragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.job_detail_container, fragment)
+                    .add(R.id.job_detail_container, mFragment)
                     .commit();
         }
     }

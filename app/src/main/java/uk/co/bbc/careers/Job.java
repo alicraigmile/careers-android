@@ -43,18 +43,18 @@ public class Job {
     // TODO -  this is view stuff, this shouldn't be here!
     public String getDetails() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Location:\n");
-        builder.append(location);
-        builder.append("\n");
         builder.append("Division:\n");
         builder.append(division);
-        builder.append("\n");
+        builder.append("\n\n");
+        builder.append("Location:\n");
+        builder.append(location);
+        builder.append("\n\n");
         builder.append("Term:\n");
         builder.append(term);
-        builder.append("\n");
+        builder.append("\n\n");
         builder.append("Grade:\n");
         builder.append(grade);
-        builder.append("\n");
+        builder.append("\n\n");
         return builder.toString();
     }
 

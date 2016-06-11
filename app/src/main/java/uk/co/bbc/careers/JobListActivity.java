@@ -155,7 +155,7 @@ public class JobListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(JobDetailFragment.ARG_ITEM_ID, String.valueOf(holder.mItem.id));
+                        arguments.putInt(JobDetailFragment.ARG_ITEM_ID, holder.mItem.id);
                         JobDetailFragment fragment = new JobDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()

@@ -1,6 +1,7 @@
 package uk.co.bbc.careers;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,12 @@ public class JobDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String url = "http://www.example.com";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
                 Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -53,8 +60,8 @@ public class JobDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(JobDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(JobDetailFragment.ARG_ITEM_ID));
+            arguments.putInt(JobDetailFragment.ARG_ITEM_ID,
+                    getIntent().getIntExtra(String.valueOf(JobDetailFragment.ARG_ITEM_ID),0));
             JobDetailFragment fragment = new JobDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

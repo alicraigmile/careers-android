@@ -18,10 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import uk.co.bbc.careers.dummy.DummyContent;
+import uk.co.bbc.careers.Jobs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,15 @@ public class JobListActivity extends AppCompatActivity {
     private SimpleItemRecyclerViewAdapter mAdapter;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        // populate with jobs data (assuming it's been retreived already
+        mAdapter.swap((ArrayList<Job>) Jobs.JOBS);
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_list);
@@ -62,6 +73,7 @@ public class JobListActivity extends AppCompatActivity {
             }
         });
 
+
         View recyclerView = findViewById(R.id.job_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
@@ -76,6 +88,7 @@ public class JobListActivity extends AppCompatActivity {
     }
 
 
+
     public void doSearch() {
 
         JobsRequest jobsRequest = new JobsRequest(
@@ -85,6 +98,9 @@ public class JobListActivity extends AppCompatActivity {
                     public void onResponse(ArrayList<Job> response) {
 
                         ArrayList<Job> al = (ArrayList<Job>) response;
+                        //update the jobs database
+                        Jobs.store(al);
+                        //update the view
                         mAdapter.swap(al);
 
                     }
@@ -94,6 +110,7 @@ public class JobListActivity extends AppCompatActivity {
                 Toast.makeText(JobListActivity.this, "Fetch jobs failed"+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
         // Add the request to the RequestQueue.
         NetworkManager.getInstance(getApplicationContext()).addToRequestQueue(jobsRequest);
     }

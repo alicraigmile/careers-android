@@ -23,7 +23,8 @@ import static com.android.volley.toolbox.HttpHeaderParser.parseCharset;
 public class JobsRequest extends Request<ArrayList<Job>> {
 
     private static final String TAG = "Job";
-    private static final String URL = "http://scot-dev0.national.core.bbc.co.uk/bbcjobs/jobs.json";
+    // private static final String URL = "http://scot-dev0.national.core.bbc.co.uk/bbcjobs/jobs.json";
+    private static final String URL = "http://192.168.1.82:9000/jobs.json";
 
     private Response.Listener<ArrayList<Job>> mListener;
     private String mUrl;

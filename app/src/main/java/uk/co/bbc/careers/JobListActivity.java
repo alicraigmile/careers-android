@@ -118,7 +118,39 @@ public class JobListActivity extends AppCompatActivity {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         mAdapter = new SimpleItemRecyclerViewAdapter(new ArrayList<Job>()); //initial setup = no items in list
-        recyclerView.setAdapter(mAdapter);
+
+        //This is the code to provide a sectioned list
+        List<SimpleSectionedRecyclerViewAdapter.Section> sections =
+                new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+
+        //Sections
+/*        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"London"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(5,"MediaCityUK"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(12,"Scotland"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(14,"Wales"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(15,"Northern Ireland"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(20,"English Regions"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(22,"International"));*/
+
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"Engineering"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(5,"HR"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(12,"Digital"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(14,"TV"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(15,"Radio"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(22,"Worldwide"));
+
+
+        //Add your adapter to the sectionAdapter
+        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+        SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
+                SimpleSectionedRecyclerViewAdapter(this,R.layout.section,R.id.section_text,mAdapter);
+        mSectionedAdapter.setSections(sections.toArray(dummy));
+
+
+        //recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mSectionedAdapter);
+
+
     }
 
     public class SimpleItemRecyclerViewAdapter

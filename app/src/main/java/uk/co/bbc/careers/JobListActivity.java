@@ -43,8 +43,8 @@ public class JobListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // populate with jobs data (assuming it's been retreived already
-        mAdapter.swap((ArrayList<Job>) Jobs.JOBS);
+        // populate with jobs data (assuming its been retrieved already)
+        mAdapter.swap((ArrayList<Job>) Jobs.JobsByDivision());
     }
 
 
@@ -93,9 +93,9 @@ public class JobListActivity extends AppCompatActivity {
                     public void onResponse(ArrayList<Job> jobsResponse) {
 
                         //update the jobs database
-                        Jobs.store(jobsResponse);
+                        Jobs.Store(jobsResponse);
                         //update the view
-                        mAdapter.swap(jobsResponse);
+                        mAdapter.swap(Jobs.JobsByDivision());
 
                         // Stop refresh animation
                         mSwipeRefreshLayout.setRefreshing(false);

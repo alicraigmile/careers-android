@@ -3,6 +3,8 @@ package uk.co.bbc.careers;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +16,25 @@ import java.util.Map;
  * <p/>
  * TODO: Replace all uses of this class before publishing your app.
  */
+
+class LexicographicComparator implements Comparator<Job> {
+    @Override
+    public int compare(Job a, Job b) {
+        return a.title.compareToIgnoreCase(b.title);
+    }
+}
+
+class DivisionComparator implements Comparator<Job> {
+    @Override
+    public int compare(Job a, Job b) {
+        try {
+            return a.division.compareToIgnoreCase(b.division);
+        } catch (NullPointerException e) {
+            return 0;
+        }
+    }
+}
+
 public class Jobs {
 
     /**
@@ -35,7 +56,7 @@ public class Jobs {
         }
     }
 
-    private static void clearJobs() {
+    private static void ClearJobs() {
         JOBS = new ArrayList<Job>();
         JOB_MAP = new HashMap<Integer, Job>();
     }
@@ -45,14 +66,30 @@ public class Jobs {
         JOB_MAP.put(Integer.valueOf(job.id), job);
     }
 
-    public static void store(ArrayList<Job> jobs) {
-        clearJobs();
+    public static void Store(ArrayList<Job> jobs) {
+        ClearJobs();
 
         Iterator itr = jobs.iterator();
         while (itr.hasNext()) {
             Job job = (Job) itr.next();
             addItem(job);
         }
+    }
+
+    public static List<Job> AllJobs() {
+        return JOBS;
+    }
+
+    public static ArrayList<Job> JobsByTitle() {
+        ArrayList<Job> jobs = (ArrayList<Job>) JOBS;
+        Collections.sort(jobs, new LexicographicComparator());
+        return jobs;
+    }
+
+    public static ArrayList<Job> JobsByDivision() {
+        ArrayList<Job> jobs = (ArrayList<Job>) JOBS;
+        Collections.sort(jobs, new DivisionComparator());
+        return jobs;
     }
 
     private static Job createDummyJob(int position) {

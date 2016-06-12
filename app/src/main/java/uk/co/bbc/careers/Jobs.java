@@ -56,18 +56,14 @@ public class Jobs {
         }
     }
 
-    private static void ClearJobs() {
-        JOBS = new ArrayList<Job>();
-        JOB_MAP = new HashMap<Integer, Job>();
-    }
-
     private static void addItem(Job job) {
         JOBS.add(job);
         JOB_MAP.put(Integer.valueOf(job.id), job);
     }
 
     public static void Store(ArrayList<Job> jobs) {
-        ClearJobs();
+        JOBS.clear();
+        JOB_MAP.clear();
 
         Iterator itr = jobs.iterator();
         while (itr.hasNext()) {

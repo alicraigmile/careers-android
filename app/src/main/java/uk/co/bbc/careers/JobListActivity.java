@@ -63,20 +63,24 @@ public class JobListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
+
+        // Refresh when you click the floating action button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 doSearch();
-                Snackbar.make(view, "Fetching jobs...", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Refreshing jobs...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
 
-
         View recyclerView = findViewById(R.id.job_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
+
+        // Load the jobs on startup
+        doSearch();
 
         if (findViewById(R.id.job_detail_container) != null) {
             // The detail container view will be present only in the
@@ -95,13 +99,12 @@ public class JobListActivity extends AppCompatActivity {
 
                 new Response.Listener<ArrayList<Job>>() {
                     @Override
-                    public void onResponse(ArrayList<Job> response) {
+                    public void onResponse(ArrayList<Job> jobsResponse) {
 
-                        ArrayList<Job> al = (ArrayList<Job>) response;
                         //update the jobs database
-                        Jobs.store(al);
+                        Jobs.store(jobsResponse);
                         //update the view
-                        mAdapter.swap(al);
+                        mAdapter.swap(jobsResponse);
 
                     }
                 }, new Response.ErrorListener() {
@@ -110,6 +113,7 @@ public class JobListActivity extends AppCompatActivity {
                 Toast.makeText(JobListActivity.this, "Fetch jobs failed"+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
 
         // Add the request to the RequestQueue.
         NetworkManager.getInstance(getApplicationContext()).addToRequestQueue(jobsRequest);

@@ -148,8 +148,7 @@ public class JobListActivity extends AppCompatActivity {
             holder.mItem = mValues.get(position);
             int a = 0;
             holder.mIdView.setText(String.valueOf(mValues.get(position).id));
-            holder.mContentView.setText(mValues.get(position).title);
-            holder.mDivisionView.setText(mValues.get(position).division);
+            holder.mTitleView.setText(mValues.get(position).title);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -181,21 +180,19 @@ public class JobListActivity extends AppCompatActivity {
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mIdView;
-            public final TextView mContentView;
-            public final TextView mDivisionView;
+            public final TextView mTitleView;
             public Job mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
                 mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
-                mDivisionView = (TextView) view.findViewById(R.id.division);
+                mTitleView = (TextView) view.findViewById(R.id.title);
             }
 
             @Override
             public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
+                return super.toString() + " '" + mTitleView.getText() + "'";
             }
         }
     }

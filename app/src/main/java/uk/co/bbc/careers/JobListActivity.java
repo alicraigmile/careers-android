@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
@@ -13,17 +13,12 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
-import uk.co.bbc.careers.dummy.DummyContent;
-import uk.co.bbc.careers.Jobs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +39,7 @@ public class JobListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     private SimpleItemRecyclerViewAdapter mAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onResume() {
@@ -69,7 +65,7 @@ public class JobListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doSearch();
+                doAsyncRefresh();
                 Snackbar.make(view, "Refreshing jobs...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -79,8 +75,17 @@ public class JobListActivity extends AppCompatActivity {
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
+        // Swipe Refresh Layout
+        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swifeRefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                doAsyncRefresh();
+            }
+        });
+
         // Load the jobs on startup
-        doSearch();
+        doAsyncRefresh();
 
         if (findViewById(R.id.job_detail_container) != null) {
             // The detail container view will be present only in the
@@ -93,7 +98,7 @@ public class JobListActivity extends AppCompatActivity {
 
 
 
-    public void doSearch() {
+    public void doAsyncRefresh() {
 
         JobsRequest jobsRequest = new JobsRequest(
 
@@ -106,10 +111,16 @@ public class JobListActivity extends AppCompatActivity {
                         //update the view
                         mAdapter.swap(jobsResponse);
 
+                        // Stop refresh animation
+                        mSwipeRefreshLayout.setRefreshing(false);
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                // Stop refresh animation
+                mSwipeRefreshLayout.setRefreshing(false);
+                // Tell us why it failed
                 Toast.makeText(JobListActivity.this, "Fetch jobs failed"+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

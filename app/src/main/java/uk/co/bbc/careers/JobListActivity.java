@@ -59,18 +59,6 @@ public class JobListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-
-        // Refresh when you click the floating action button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doAsyncRefresh();
-                Snackbar.make(view, "Refreshing jobs...", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         View recyclerView = findViewById(R.id.job_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);

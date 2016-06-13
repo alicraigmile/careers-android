@@ -38,6 +38,7 @@ public class JobListActivity extends AppCompatActivity {
     private boolean mTwoPane;
     private SimpleItemRecyclerViewAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
 
     @Override
     protected void onResume() {
@@ -99,6 +100,7 @@ public class JobListActivity extends AppCompatActivity {
 
                         // Stop refresh animation
                         mSwipeRefreshLayout.setRefreshing(false);
+                        updateSections();
 
                     }
                 }, new Response.ErrorListener() {
@@ -142,7 +144,7 @@ public class JobListActivity extends AppCompatActivity {
 
         //Add your adapter to the sectionAdapter
         SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
-        SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
+        mSectionedAdapter = new
                 SimpleSectionedRecyclerViewAdapter(this,R.layout.section,R.id.section_text,mAdapter);
         mSectionedAdapter.setSections(sections.toArray(dummy));
 
@@ -151,6 +153,26 @@ public class JobListActivity extends AppCompatActivity {
         recyclerView.setAdapter(mSectionedAdapter);
 
 
+    }
+
+    public void updateSections () {
+
+        //This is the code to provide a sectioned list
+        List<SimpleSectionedRecyclerViewAdapter.Section> sections =
+                new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+
+        //Sections
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"London"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(10,"MediaCityUK"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(12,"Scotland"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(14,"Wales"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(15,"Northern Ireland"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(20,"English Regions"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(22,"International"));
+
+        //Add your adapter to the sectionAdapter
+        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+        mSectionedAdapter.setSections(sections.toArray(dummy));
     }
 
     public class SimpleItemRecyclerViewAdapter

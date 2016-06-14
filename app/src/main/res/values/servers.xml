@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<string name="jobs_url">http://scot-dev0.national.core.bbc.co.uk/bbcjobs/jobs.json</string>-->
+    <!--<string name="jobs_url">http://192.168.1.82:9000/jobs.json</string>-->
+    <string name="jobs_url">http://careers.xgusties.com/jobs.json</string>
+
+</resources>

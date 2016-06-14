@@ -87,8 +87,12 @@ public class JobListActivity extends AppCompatActivity {
 
     public void doAsyncRefresh() {
 
+
+        String jobsUrl = getResources().getString(R.string.jobs_url);
+
         JobsRequest jobsRequest = new JobsRequest(
 
+                jobsUrl,
                 new Response.Listener<ArrayList<Job>>() {
                     @Override
                     public void onResponse(ArrayList<Job> jobsResponse) {

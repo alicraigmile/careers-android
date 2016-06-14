@@ -13,24 +13,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import static com.android.volley.toolbox.HttpHeaderParser.parseCharset;
 
 public class JobsRequest extends Request<ArrayList<Job>> {
 
     private static final String TAG = "Job";
-    // private static final String URL = "http://scot-dev0.national.core.bbc.co.uk/bbcjobs/jobs.json";
-    private static final String URL = "http://192.168.1.82:9000/jobs.json";
-
     private Response.Listener<ArrayList<Job>> mListener;
     private String mUrl;
 
-    public JobsRequest(Response.Listener<ArrayList<Job>> listener, Response.ErrorListener errorListener){
-        super(Method.GET, URL, errorListener);
+    public JobsRequest(String jobsUrl, Response.Listener<ArrayList<Job>> listener, Response.ErrorListener errorListener){
+        super(Method.GET, jobsUrl, errorListener);
         mListener = listener;
     }
 

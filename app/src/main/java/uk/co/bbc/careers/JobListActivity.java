@@ -46,8 +46,11 @@ public class JobListActivity extends AppCompatActivity {
 //    private static Comparator<Job> mJobsComparator = new DivisionComparator();
   //  private static SectionCalculator mJobsSectionCalculator = new DivisionSectionCalculator();
 
-    private static Comparator<Job> mJobsComparator = new LexicographicComparator();
-  private static SectionCalculator mJobsSectionCalculator = new AtozSectionCalculator();
+//    private static Comparator<Job> mJobsComparator = new LexicographicComparator();
+//    private static SectionCalculator mJobsSectionCalculator = new AtozSectionCalculator();
+
+    private static Comparator<Job> mJobsComparator = new GradeComparator();
+    private static SectionCalculator mJobsSectionCalculator = new GradeSectionCalculator();
 
     //sectionCalculator = new AtozSectionCalculator();
     //sectionCalculator = new DivisionSectionCalculator();
@@ -60,6 +63,7 @@ public class JobListActivity extends AppCompatActivity {
         super.onResume();
 
         ArrayList<Job> jobs = (ArrayList<Job>) Jobs.AllJobs();
+        Collections.sort(jobs, new LexicographicComparator());
         Collections.sort(jobs, mJobsComparator);
 
         // populate with jobs data (assuming its been retrieved already)
@@ -120,6 +124,7 @@ public class JobListActivity extends AppCompatActivity {
                         //update the view
 
                         ArrayList<Job> jobs = (ArrayList<Job>) Jobs.AllJobs();
+                        Collections.sort(jobs, new LexicographicComparator());
                         Collections.sort(jobs, mJobsComparator);
 
                         mAdapter.swap(jobs);

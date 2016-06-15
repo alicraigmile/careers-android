@@ -1,6 +1,7 @@
 package uk.co.bbc.careers;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,15 +29,30 @@ public class GradeSectionCalculator implements SectionCalculator {
             Job thisJob = jobIterator.next();
 
             if (lastJob == null) { // first item on list is a new section
-                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, thisJob.grade));
-            } else if (!thisJob.grade.toString().equals(lastJob.grade.toString())) {
-                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, thisJob.grade));
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, groupingOf(thisJob.grade)));
+            } else if (! groupingOf(thisJob.grade).toString().equals(groupingOf(lastJob.grade).toString())) {
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, groupingOf(thisJob.grade)));
             }
             lastJob = thisJob;
             position++;
 
         }
 
+
         return sections;
+    }
+
+    private String groupingOf(String grade) {
+        if (grade == null) {
+            return "Unknown";
+        }
+
+        //Log.d("GRADE: ", "'" + grade + "'");
+        // TODO - this is not working
+        if (grade == "-") {
+            return "Unknown";
+        }
+
+        return "Grade " + grade;
     }
 }

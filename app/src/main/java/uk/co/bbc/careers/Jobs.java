@@ -47,6 +47,21 @@ class GradeComparator implements Comparator<Job> {
     }
 }
 
+class LocationComparator implements Comparator<Job> {
+    @Override
+    public int compare(Job a, Job b) {
+        try {
+            String a2 = LocationSectionCalculator.groupingOf(a.location);
+            String b2 = LocationSectionCalculator.groupingOf(b.location);
+
+            return a2.compareToIgnoreCase(b2);
+        } catch (NullPointerException e) {
+            return 0;
+        }
+    }
+}
+
+
 public class Jobs {
 
     /**

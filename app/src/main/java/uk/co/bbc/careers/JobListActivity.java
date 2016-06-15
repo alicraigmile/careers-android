@@ -49,8 +49,11 @@ public class JobListActivity extends AppCompatActivity {
 //    private static Comparator<Job> mJobsComparator = new LexicographicComparator();
 //    private static SectionCalculator mJobsSectionCalculator = new AtozSectionCalculator();
 
-    private static Comparator<Job> mJobsComparator = new GradeComparator();
-    private static SectionCalculator mJobsSectionCalculator = new GradeSectionCalculator();
+    private static Comparator<Job> mJobsComparator = new LocationComparator();
+    private static SectionCalculator mJobsSectionCalculator = new LocationSectionCalculator();
+
+//    private static Comparator<Job> mJobsComparator = new GradeComparator();
+//    private static SectionCalculator mJobsSectionCalculator = new GradeSectionCalculator();
 
     //sectionCalculator = new AtozSectionCalculator();
     //sectionCalculator = new DivisionSectionCalculator();

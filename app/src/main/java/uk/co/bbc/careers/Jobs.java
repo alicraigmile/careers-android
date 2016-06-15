@@ -35,6 +35,18 @@ class DivisionComparator implements Comparator<Job> {
     }
 }
 
+
+class GradeComparator implements Comparator<Job> {
+    @Override
+    public int compare(Job a, Job b) {
+        try {
+            return a.grade.compareToIgnoreCase(b.grade);
+        } catch (NullPointerException e) {
+            return 0;
+        }
+    }
+}
+
 public class Jobs {
 
     /**

@@ -19,6 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,12 +43,27 @@ public class JobListActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
 
+//    private static Comparator<Job> mJobsComparator = new DivisionComparator();
+  //  private static SectionCalculator mJobsSectionCalculator = new DivisionSectionCalculator();
+
+    private static Comparator<Job> mJobsComparator = new LexicographicComparator();
+  private static SectionCalculator mJobsSectionCalculator = new AtozSectionCalculator();
+
+    //sectionCalculator = new AtozSectionCalculator();
+    //sectionCalculator = new DivisionSectionCalculator();
+   // sectionCalculator = new GradeSectionCalculator();
+    //sectionCalculator = new LocationSectionCalculator();
+
+
     @Override
     protected void onResume() {
         super.onResume();
 
+        ArrayList<Job> jobs = (ArrayList<Job>) Jobs.AllJobs();
+        Collections.sort(jobs, mJobsComparator);
+
         // populate with jobs data (assuming its been retrieved already)
-        mAdapter.swap((ArrayList<Job>) Jobs.JobsByDivision());
+        mAdapter.swap((ArrayList<Job>) jobs);
     }
 
 
@@ -101,7 +118,11 @@ public class JobListActivity extends AppCompatActivity {
                         //update the jobs database
                         Jobs.Store(jobsResponse);
                         //update the view
-                        mAdapter.swap(Jobs.JobsByDivision());
+
+                        ArrayList<Job> jobs = (ArrayList<Job>) Jobs.AllJobs();
+                        Collections.sort(jobs, mJobsComparator);
+
+                        mAdapter.swap(jobs);
 
                         // Stop refresh animation
                         mSwipeRefreshLayout.setRefreshing(false);
@@ -126,15 +147,8 @@ public class JobListActivity extends AppCompatActivity {
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         mAdapter = new SimpleItemRecyclerViewAdapter(new ArrayList<Job>()); //initial setup = no items in list
 
-        //Add your adapter to the sectionAdapter
-        SectionCalculator sectionCalculator;
-        //sectionCalculator = new AtozSectionCalculator();
-        sectionCalculator = new DivisionSectionCalculator();
-        //sectionCalculator = new GradeSectionCalculator();
-        //sectionCalculator = new LocationSectionCalculator();
-
         mSectionedAdapter = new
-                JobListRecyclerViewAdapter(this,R.layout.section,R.id.section_text, mAdapter, mAdapter.getItems(), sectionCalculator);
+                JobListRecyclerViewAdapter(this,R.layout.section,R.id.section_text, mAdapter, mAdapter.getItems(), mJobsSectionCalculator);
 
         recyclerView.setAdapter(mSectionedAdapter);
 

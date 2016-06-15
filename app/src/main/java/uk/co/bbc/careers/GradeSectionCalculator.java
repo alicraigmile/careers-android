@@ -21,11 +21,21 @@ public class GradeSectionCalculator implements SectionCalculator {
 
         List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
 
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"7"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(5,"8"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(12,"9"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(14,"10"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(15,"11"));
+        Job lastJob = null;
+        int position = 0;
+
+        while (jobIterator.hasNext()) {
+            Job thisJob = jobIterator.next();
+
+            if (lastJob == null) { // first item on list is a new section
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, thisJob.grade));
+            } else if (!thisJob.grade.toString().equals(lastJob.grade.toString())) {
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, thisJob.grade));
+            }
+            lastJob = thisJob;
+            position++;
+
+        }
 
         return sections;
     }

@@ -19,13 +19,32 @@ public class AtozSectionCalculator implements SectionCalculator {
 
         List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
 
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"A"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(5,"B"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(12,"C"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(14,"D"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(15,"E"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(22,"F"));
+        Job lastJob = null;
+        int position = 0;
+
+        String TAG = "DivisionSectionCalculator";
+        while (jobIterator.hasNext()) {
+            Job thisJob = jobIterator.next();
+
+            if (lastJob == null) { // first item on list is a new section
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, groupingOf(thisJob.title)));
+            } else if (! groupingOf(thisJob.title).toString().equals(groupingOf(lastJob.title).toString())) {
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, groupingOf(thisJob.title)));
+            }
+            lastJob = thisJob;
+            position++;
+
+        }
 
         return sections;
+    }
+
+    private String groupingOf(String title) {
+        Character firstChar = title.charAt(0);
+        if (Character.isDigit(firstChar)) {
+            return "0-9";
+        }
+
+        return String.valueOf(firstChar);
     }
 }

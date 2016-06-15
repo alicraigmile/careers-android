@@ -89,7 +89,9 @@ public class Jobs {
     }
 
     private static Job createDummyJob(int position) {
-        return new Job(position, "Job " + position, makeURL(position));
+                Job job = new Job(position, "Job " + position, makeURL(position));
+        job.division = "Position " + String.valueOf(Math.round(position % 2));
+        return job;
     }
 
     private static URL makeURL(int position) {

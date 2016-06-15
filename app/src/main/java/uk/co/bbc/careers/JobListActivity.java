@@ -43,14 +43,14 @@ public class JobListActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
 
-//    private static Comparator<Job> mJobsComparator = new DivisionComparator();
-  //  private static SectionCalculator mJobsSectionCalculator = new DivisionSectionCalculator();
+    private static Comparator<Job> mJobsComparator = new DivisionComparator();
+    private static SectionCalculator mJobsSectionCalculator = new DivisionSectionCalculator();
 
 //    private static Comparator<Job> mJobsComparator = new LexicographicComparator();
 //    private static SectionCalculator mJobsSectionCalculator = new AtozSectionCalculator();
 
-    private static Comparator<Job> mJobsComparator = new LocationComparator();
-    private static SectionCalculator mJobsSectionCalculator = new LocationSectionCalculator();
+//    private static Comparator<Job> mJobsComparator = new LocationComparator();
+//    private static SectionCalculator mJobsSectionCalculator = new LocationSectionCalculator();
 
 //    private static Comparator<Job> mJobsComparator = new GradeComparator();
 //    private static SectionCalculator mJobsSectionCalculator = new GradeSectionCalculator();
@@ -189,7 +189,7 @@ public class JobListActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             int a = 0;
-            holder.mIdView.setText(String.valueOf(mValues.get(position).id));
+            //holder.mIdView.setText(String.valueOf(mValues.get(position).id));
             holder.mTitleView.setText(mValues.get(position).title);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -225,14 +225,14 @@ public class JobListActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mIdView;
+            //public final TextView mIdView;
             public final TextView mTitleView;
             public Job mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
+                //mIdView = (TextView) view.findViewById(R.id.id);
                 mTitleView = (TextView) view.findViewById(R.id.title);
             }
 

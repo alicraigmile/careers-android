@@ -43,14 +43,14 @@ public class JobListActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
 
-    private static Comparator<Job> mJobsComparator = new DivisionComparator();
-    private static SectionCalculator mJobsSectionCalculator = new DivisionSectionCalculator();
+//   private static Comparator<Job> mJobsComparator = new DivisionComparator();
+//   private static SectionCalculator mJobsSectionCalculator = new DivisionSectionCalculator();
 
 //    private static Comparator<Job> mJobsComparator = new LexicographicComparator();
 //    private static SectionCalculator mJobsSectionCalculator = new AtozSectionCalculator();
 
-//    private static Comparator<Job> mJobsComparator = new LocationComparator();
-//    private static SectionCalculator mJobsSectionCalculator = new LocationSectionCalculator();
+    private static Comparator<Job> mJobsComparator = new LocationComparator();
+    private static SectionCalculator mJobsSectionCalculator = new LocationSectionCalculator();
 
 //    private static Comparator<Job> mJobsComparator = new GradeComparator();
 //    private static SectionCalculator mJobsSectionCalculator = new GradeSectionCalculator();

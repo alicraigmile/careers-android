@@ -17,7 +17,7 @@ public class AtozSectionCalculator implements SectionCalculator {
     @Override
     public List<SimpleSectionedRecyclerViewAdapter.Section> calculateSections(Iterator<Job> jobIterator) {
 
-        List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+        List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
 
         Job lastJob = null;
         int position = 0;
@@ -28,7 +28,7 @@ public class AtozSectionCalculator implements SectionCalculator {
 
             if (lastJob == null) { // first item on list is a new section
                 sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, groupingOf(thisJob.title)));
-            } else if (! groupingOf(thisJob.title).toString().equals(groupingOf(lastJob.title).toString())) {
+            } else if (! groupingOf(thisJob.title).equals(groupingOf(lastJob.title))) {
                 sections.add(new SimpleSectionedRecyclerViewAdapter.Section(position, groupingOf(thisJob.title)));
             }
             lastJob = thisJob;

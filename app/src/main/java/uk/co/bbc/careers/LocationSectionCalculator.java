@@ -54,7 +54,9 @@ public class LocationSectionCalculator implements SectionCalculator {
             }
 
             Map<String, String> map = new HashMap<String, String>();
+            map.put("Brussels", "International");
             map.put("London", "London");
+            map.put("Brock House", "London");
             map.put("Elstree", "London");
             map.put("Manchester", "MediaCity UK, Salford Quays");
             map.put("Salford", "MediaCity UK, Salford Quays");
@@ -74,6 +76,20 @@ public class LocationSectionCalculator implements SectionCalculator {
             map.put("Carlisle", "English Regions");
             map.put("Gloucester", "English Regions");
             map.put("Bristol", "English Regions");
+            map.put("Lancashire", "English Regions");
+            map.put("Nottingham", "English Regions");
+            map.put("Cornwall", "English Regions");
+            map.put("Blackburn", "English Regions");
+            map.put("Truro", "English Regions");
+            map.put("Leicester", "English Regions");
+            map.put("Sheffield", "English Regions");
+            map.put("Tunbridge Wells", "English Regions");
+            map.put("Derby", "English Regions");
+            map.put("Leeds", "English Regions");
+            map.put("Cambridge", "English Regions");
+            map.put("Northampton", "English Regions");
+            map.put("Norfolk", "English Regions");
+            map.put("York", "English Regions");
             map.put("Dumbarton", "Scotland");
             map.put("Newcastle", "English Regions");
 

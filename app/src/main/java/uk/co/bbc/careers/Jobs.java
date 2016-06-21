@@ -106,19 +106,4 @@ public class Jobs {
         return jobs;
     }
 
-    private static Job createDummyJob(int position) {
-                Job job = new Job(position, "Job " + position, makeURL(position));
-        job.division = "Position " + String.valueOf(Math.round(position % 2));
-        return job;
-    }
-
-    private static URL makeURL(int position) {
-        try {
-            return new URL("http://_x_fake_domain.com/job/" + String.valueOf(position));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 }

@@ -74,15 +74,6 @@ public class Jobs {
      */
     public static Map<Integer, Job> JOB_MAP = new HashMap<Integer, Job>();
 
-    private static final int COUNT = 25;
-
-    static {
-        // Add some sample items.
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyJob(i));
-        }
-    }
-
     private static void addItem(Job job) {
         JOBS.add(job);
         JOB_MAP.put(Integer.valueOf(job.id), job);

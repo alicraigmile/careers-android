@@ -15,14 +15,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -72,7 +70,7 @@ public class JobListActivity extends AppCompatActivity {
         Collections.sort(jobs, mJobsComparator);
 
         // populate with jobs data (assuming its been retrieved already)
-        mAdapter.swap((ArrayList<Job>) jobs);
+        mAdapter.swap(jobs);
     }
 
 

@@ -2,7 +2,10 @@ package uk.co.bbc.careers;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.LruCache;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -52,11 +55,24 @@ public class NetworkManager {
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req) {
+    public <T> void addToRequestQueue(Request<T> req) throws NotConnectedToNetworkException {
+        if (! isConnectedToNetwork()) {
+            throw new NotConnectedToNetworkException();
+        }
         getRequestQueue().add(req);
     }
 
     public ImageLoader getImageLoader() {
         return mImageLoader;
     }
+
+    public static Boolean isConnectedToNetwork() {
+        ConnectivityManager cm = (ConnectivityManager) mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+    }
 }
+
+class NotConnectedToNetworkException extends Exception {};

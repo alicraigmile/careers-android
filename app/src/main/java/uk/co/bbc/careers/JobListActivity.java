@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.List;
  */
 public class JobListActivity extends AppCompatActivity {
 
+    private static final String TAG = "JobListActivity";
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -142,13 +144,21 @@ public class JobListActivity extends AppCompatActivity {
                 // Stop refresh animation
                 mSwipeRefreshLayout.setRefreshing(false);
                 // Tell us why it failed
-                Toast.makeText(JobListActivity.this, "Fetch jobs failed"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Fetch jobs failed: " + error.toString());
+                Toast.makeText(JobListActivity.this, "Fetch jobs failed", Toast.LENGTH_SHORT).show();
             }
         });
 
 
         // Add the request to the RequestQueue.
-        NetworkManager.getInstance(getApplicationContext()).addToRequestQueue(jobsRequest);
+        try {
+            NetworkManager.getInstance(getApplicationContext()).addToRequestQueue(jobsRequest);
+        } catch (NotConnectedToNetworkException e) {
+            // Stop refresh animation
+            mSwipeRefreshLayout.setRefreshing(false);
+            // Tell us why it failed
+            Toast.makeText(JobListActivity.this, "Not connected", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

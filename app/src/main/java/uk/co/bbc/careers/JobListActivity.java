@@ -143,7 +143,7 @@ public class JobListActivity extends AppCompatActivity {
                 mSwipeRefreshLayout.setRefreshing(false);
                 // Tell us why it failed
                 Log.d(TAG, "Fetch jobs failed: " + error.toString());
-                Toast.makeText(JobListActivity.this, "Fetch jobs failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(JobListActivity.this, R.string.fetch_jobs_failed, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -155,7 +155,7 @@ public class JobListActivity extends AppCompatActivity {
             // Stop refresh animation
             mSwipeRefreshLayout.setRefreshing(false);
             // Tell us why it failed
-            Toast.makeText(JobListActivity.this, "Not connected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(JobListActivity.this, R.string.not_connected, Toast.LENGTH_SHORT).show();
         }
     }
 

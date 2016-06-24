@@ -1,15 +1,19 @@
 package uk.co.bbc.careers;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -42,6 +46,7 @@ public class JobListActivity extends AppCompatActivity {
     public SimpleItemRecyclerViewAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
+    private String mSearchQuery;
 
 //   private static Comparator<Job> mJobsComparator = new DivisionComparator();
 //   private static SectionCalculator mJobsSectionCalculator = new DivisionSectionCalculator();
@@ -65,12 +70,32 @@ public class JobListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        ArrayList<Job> jobs = (ArrayList<Job>) Jobs.AllJobs();
-        Collections.sort(jobs, new LexicographicComparator());
-        Collections.sort(jobs, mJobsComparator);
+        populateListWithJobs();
+    }
 
-        // populate with jobs data (assuming its been retrieved already)
-        mAdapter.swap(jobs);
+    private void populateListWithJobs() {
+
+        List<Job> jobs = Jobs.AllJobs();
+        List<Job> filteredJobs = new ArrayList<>();
+
+        if (mSearchQuery != null) {
+
+            for (Job job: jobs) {
+                if (job.title.toLowerCase().contains(mSearchQuery.toLowerCase())) {
+                    filteredJobs.add(job);
+                } else if (job.division.toLowerCase().contains(mSearchQuery.toLowerCase())) {
+                    filteredJobs.add(job);
+                } else if (job.location.toLowerCase().contains(mSearchQuery.toLowerCase())) {
+                    filteredJobs.add(job);
+                }
+            }
+        } else {
+            filteredJobs = jobs;
+        }
+        Collections.sort(filteredJobs, new LexicographicComparator());
+        Collections.sort(filteredJobs, mJobsComparator);
+
+        mAdapter.swap((ArrayList<Job>) filteredJobs);
     }
 
 
@@ -78,6 +103,14 @@ public class JobListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_list);
+
+        // Get the intent, verify the action and get the query
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d(TAG, "Search query: " + query);
+            mSearchQuery = query;
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,7 +141,17 @@ public class JobListActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
 
+        // Retrieve the SearchView and plug it into SearchManager
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return true;
+    }
 
     public void doAsyncRefresh() {
 
@@ -125,12 +168,7 @@ public class JobListActivity extends AppCompatActivity {
                         //update the jobs database
                         Jobs.Store(jobsResponse);
                         //update the view
-
-                        ArrayList<Job> jobs = (ArrayList<Job>) Jobs.AllJobs();
-                        Collections.sort(jobs, new LexicographicComparator());
-                        Collections.sort(jobs, mJobsComparator);
-
-                        mAdapter.swap(jobs);
+                        populateListWithJobs();
 
                         // Stop refresh animation
                         mSwipeRefreshLayout.setRefreshing(false);

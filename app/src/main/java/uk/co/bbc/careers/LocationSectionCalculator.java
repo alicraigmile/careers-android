@@ -66,6 +66,7 @@ public class LocationSectionCalculator implements SectionCalculator {
             map.put("Edinburgh", "Scotland");
             map.put("Edinburgh", "Scotland");
             map.put("Pacific Quay", "Scotland");
+            map.put("Stornoway", "Scotland");
             map.put("Cardiff", "Wales");
             map.put("Wales", "Wales");
             map.put("Northern Ireland", "Northern Ireland");
@@ -92,6 +93,11 @@ public class LocationSectionCalculator implements SectionCalculator {
             map.put("York", "English Regions");
             map.put("Dumbarton", "Scotland");
             map.put("Newcastle", "English Regions");
+            map.put("Southampton", "English Regions");
+            map.put("Swansea", "Wales");
+            map.put("Wrexham", "Wales");
+            map.put("Lincolnshire", "English Regions");
+            map.put("Jersey", "English Regions");
 
             for (Map.Entry<String, String> e : map.entrySet()) {
                 if (location.toLowerCase().contains(e.getKey().toLowerCase())) {

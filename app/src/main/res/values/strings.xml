@@ -5,4 +5,5 @@
     <string name="fetch_jobs_failed">Fetch jobs failed</string>
     <string name="app_label">BBC Careers</string>
     <string name="search_title">Search jobs</string>
+    <string name="search_hint">Search jobs</string>
 </resources>

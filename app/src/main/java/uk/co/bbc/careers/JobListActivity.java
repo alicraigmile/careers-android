@@ -1,6 +1,7 @@
 package uk.co.bbc.careers;
 
 import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -89,6 +90,17 @@ public class JobListActivity extends AppCompatActivity {
                     filteredJobs.add(job);
                 }
             }
+
+            //TODO - cancel searh + show all results
+            //TODO - show search term in dialog
+            Integer number = filteredJobs.toArray().length;
+            if (number > 0) {
+                Toast.makeText(this, "Found " + number + " results for " + mSearchQuery, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "No results found", Toast.LENGTH_SHORT).show();
+
+            }
+
         } else {
             filteredJobs = jobs;
         }

@@ -15,6 +15,7 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.SearchEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -103,6 +104,15 @@ public class JobListActivity extends AppCompatActivity {
 
         } else {
             filteredJobs = jobs;
+
+            Integer number = filteredJobs.toArray().length;
+            if (number > 0) {
+                Toast.makeText(this, "Showing all " + number + " jobs", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "No vacancies!", Toast.LENGTH_SHORT).show();
+
+            }
+
         }
         Collections.sort(filteredJobs, new LexicographicComparator());
         Collections.sort(filteredJobs, mJobsComparator);

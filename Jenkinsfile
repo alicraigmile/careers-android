@@ -12,7 +12,7 @@ node {
   echo "My branch is: ${env.BRANCH_NAME}"
 
   //build your gradle flavor, passes the current build number as a parameter to gradle
-  sh "./gradlew clean assembleDebug -PBUILD_NUMBER=${env.BUILD_NUMBER}"
+  sh "./gradlew clean assembleDebug -PBUILD_NUMBER=${env.BUILD_NUMBER} -PANDROID_BUILD_TOOLS_VERSION=${env.ANDROID_BUILD_TOOLS_VERSION}"
 
   stage 'Stage Archive'
   //tell Jenkins to archive the apks

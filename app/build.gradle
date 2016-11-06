@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 // Used to set the package version name and version code
 ext.versionMajor = 1
 ext.versionMinor = 0
+ext.versionPoint = 0
 
 android {
     compileSdkVersion 23
@@ -25,6 +26,16 @@ android {
     }
 }
 
+apply plugin: 'de.felixschulze.gradle.hockeyapp'
+
+hockeyapp {
+    apiToken = HOCKEYAPP_API_TOKEN
+    releaseType = 2 // alpha
+    notify = 1 //to notify all testers that can install this app
+    status = 2 //to make the version available for download
+    notes = getUploadNotesParam()
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -39,13 +50,25 @@ dependencies {
 
 def computeVersionName() {
     // Basic <major>.<minor>
-    return String.format('%d.%d', versionMajor, versionMinor)
+    return String.format('%d.%d.%d', versionMajor, versionMinor, versionPoint)
 }
 
 def computeVersionCode() {
-    // Will return 120042 for v1.2 Jenkins build #42
-    // Major + minor + Jenkins build number (where available)
-    return (versionMajor * 100000)
-    + (versionMinor * 10000)
-    + Integer.valueOf(System.env.BUILD_NUMBER ?: 0)
+    // Will return Jenkins build #42 (defaults to 0 if not set)
+    return Integer.valueOf(System.env.BUILD_NUMBER ?: 0)
+}
+
+/**
+ * Get latest notes from git to use for build upload
+ * By default if not specified, last 3 commits log will be used
+ *
+ * @return String If param -PuploadNotes is present then return String values or default value
+ */
+def getUploadNotesParam() {
+    //Default value: prettified last 3 commits log
+    def git_notes = ['git', 'log', '-3' ,'--pretty=format:\"%h by %an, %aD %n| Message: >>%s<<%n\"']
+    def notes = project.hasProperty('uploadNotes') ? uploadNotes : git_notes.execute().in.text
+    println "Upload Notes are set to $notes"
+
+    return notes
 }

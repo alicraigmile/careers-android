@@ -57,7 +57,6 @@ public class JobsRequest extends Request<ArrayList<Job>> {
                 String type = result.getString("type");
                 int jobId = result.getInt("id");
                 String title = result.getString("title");
-                Boolean starred = false;
 
                 Job job = new Job();
                 job.location = location;
@@ -68,7 +67,6 @@ public class JobsRequest extends Request<ArrayList<Job>> {
                 job.type = type;
                 job.id = jobId;
                 job.title = title;
-                job.starred = starred;
 
                 cleanResults.add(job);
 

@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+// Used to set the package version name and version code
+ext.versionMajor = 1
+ext.versionMinor = 0
+
 android {
     compileSdkVersion 23
     buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
@@ -7,8 +11,8 @@ android {
         applicationId 'com.xgusties.careers'
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode computeVersionCode()
+        versionName computeVersionName()
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "c70901d110ec4b17839387eceb8608a4"]
     }
     buildTypes {
@@ -31,4 +35,17 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.mcxiaoke.volley:library:1.0.17'
     compile 'net.hockeyapp.android:HockeySDK:4.1.1'
+}
+
+def computeVersionName() {
+    // Basic <major>.<minor>
+    return String.format('%d.%d', versionMajor, versionMinor)
+}
+
+def computeVersionCode() {
+    // Will return 120042 for v1.2 Jenkins build #42
+    // Major + minor + Jenkins build number (where available)
+    return (versionMajor * 100000)
+    + (versionMinor * 10000)
+    + Integer.valueOf(System.env.BUILD_NUMBER ?: 0)
 }

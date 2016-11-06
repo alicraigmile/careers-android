@@ -1,7 +1,5 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

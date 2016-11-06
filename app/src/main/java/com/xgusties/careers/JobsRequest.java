@@ -1,4 +1,4 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
 import android.util.Log;
 
@@ -7,6 +7,7 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.xgusties.careers.Job;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +17,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class JobsRequest extends Request<ArrayList<Job>> {

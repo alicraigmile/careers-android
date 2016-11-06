@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">BBC Careers - Vacancies for staff</string>
+    <string name="app_name">Careers</string>
     <string name="title_job_detail">Job Detail</string>
     <string name="not_connected">Not connected</string>
     <string name="fetch_jobs_failed">Fetch jobs failed</string>
-    <string name="app_label">BBC Careers</string>
+    <string name="app_label">Careers</string>
     <string name="search_title">Search jobs</string>
     <string name="search_hint">Search jobs</string>
 </resources>

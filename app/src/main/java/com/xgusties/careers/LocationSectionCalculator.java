@@ -1,14 +1,10 @@
-package uk.co.bbc.careers;
-
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+package com.xgusties.careers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by craiga01 on 14/06/2016.

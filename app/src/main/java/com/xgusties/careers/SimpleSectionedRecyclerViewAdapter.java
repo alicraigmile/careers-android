@@ -1,4 +1,4 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

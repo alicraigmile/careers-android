@@ -1,4 +1,4 @@
-package uk.co.bbc.careers.dummy;
+package com.xgusties.careers.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

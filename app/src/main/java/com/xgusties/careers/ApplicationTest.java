@@ -1,4 +1,4 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

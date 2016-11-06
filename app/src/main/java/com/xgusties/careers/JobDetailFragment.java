@@ -1,4 +1,4 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
 import android.app.Activity;
 import android.support.design.widget.CollapsingToolbarLayout;

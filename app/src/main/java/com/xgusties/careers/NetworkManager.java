@@ -1,11 +1,10 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.LruCache;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;

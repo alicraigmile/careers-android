@@ -1,7 +1,6 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
 import android.app.SearchManager;
-import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.SearchEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,6 +26,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import com.xgusties.careers.LexicographicComparator;
+import com.xgusties.careers.LocationComparator;
+import com.xgusties.careers.NotConnectedToNetworkException;
 
 /**
  * An activity representing a list of Jobs. This activity

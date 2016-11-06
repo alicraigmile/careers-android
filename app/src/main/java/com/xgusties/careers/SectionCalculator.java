@@ -1,6 +1,4 @@
-package uk.co.bbc.careers;
-
-import android.support.v7.widget.RecyclerView;
+package com.xgusties.careers;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,6 +1,4 @@
-package uk.co.bbc.careers;
-
-import android.util.Log;
+package com.xgusties.careers;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,4 +1,4 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,8 +1,6 @@
-package uk.co.bbc.careers;
+package com.xgusties.careers;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 

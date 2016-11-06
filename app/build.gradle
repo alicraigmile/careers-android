@@ -9,6 +9,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "c70901d110ec4b17839387eceb8608a4"]
     }
     buildTypes {
         release {
@@ -29,4 +30,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.mcxiaoke.volley:library:1.0.17'
+    compile 'net.hockeyapp.android:HockeySDK:4.1.1'
 }

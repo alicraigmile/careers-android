@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -75,6 +77,20 @@ public class JobListActivity extends AppCompatActivity {
         super.onResume();
 
         populateListWithJobs();
+        checkForCrashes();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterManagers();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterManagers();
     }
 
     private void populateListWithJobs() {
@@ -163,6 +179,7 @@ public class JobListActivity extends AppCompatActivity {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+        checkForUpdates();
     }
 
     @Override
@@ -312,4 +329,19 @@ public class JobListActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    private void checkForCrashes() {
+        CrashManager.register(this);
+    }
+
+    private void checkForUpdates() {
+        // Remove this for store builds!
+        UpdateManager.register(this);
+    }
+
+    private void unregisterManagers() {
+        UpdateManager.unregister();
+    }
+
 }

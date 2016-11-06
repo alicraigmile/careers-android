@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class JobsRequest extends Request<ArrayList<Job>> {
@@ -38,7 +39,11 @@ public class JobsRequest extends Request<ArrayList<Job>> {
 
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            JSONArray results = new JSONArray(jsonString);
+            JSONObject jobsData = new JSONObject(jsonString);
+
+            String timestamp = jobsData.getString("timestamp");
+            int version = jobsData.getInt("version");
+            JSONArray results = jobsData.getJSONArray("jobs");
 
             for (int i = 0; i < results.length(); i++) {
                 JSONObject result = results.getJSONObject(i);
@@ -52,6 +57,7 @@ public class JobsRequest extends Request<ArrayList<Job>> {
                 String type = result.getString("type");
                 int jobId = result.getInt("id");
                 String title = result.getString("title");
+                Boolean starred = false;
 
                 Job job = new Job();
                 job.location = location;
@@ -62,10 +68,14 @@ public class JobsRequest extends Request<ArrayList<Job>> {
                 job.type = type;
                 job.id = jobId;
                 job.title = title;
+                job.starred = starred;
 
                 cleanResults.add(job);
 
             }
+
+            Log.d(TAG, "data timestamp: "+ timestamp);
+
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {

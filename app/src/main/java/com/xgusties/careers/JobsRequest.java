@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.xgusties.careers.Job;
+import com.xgusties.careers.JobsData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,35 +17,36 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
-
-public class JobsRequest extends Request<ArrayList<Job>> {
+public class JobsRequest extends Request<JobsData> {
 
     private static final String TAG = "Job";
-    private Response.Listener<ArrayList<Job>> mListener;
+    private Response.Listener<JobsData> mListener;
     private String mUrl;
 
-    public JobsRequest(String jobsUrl, Response.Listener<ArrayList<Job>> listener, Response.ErrorListener errorListener){
+    public JobsRequest(String jobsUrl, Response.Listener<JobsData> listener, Response.ErrorListener errorListener){
         super(Method.GET, jobsUrl, errorListener);
         mListener = listener;
     }
 
     @Override
-    protected Response<ArrayList<Job>> parseNetworkResponse(NetworkResponse response) {
+    protected Response<JobsData> parseNetworkResponse(NetworkResponse response) {
 
         int statusCode = response.statusCode;
         Log.d(TAG, "networkresponse statuscode:"+ statusCode);
-        ArrayList<Job> cleanResults = new ArrayList<Job>();
+        JobsData jobsData = new JobsData();
 
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            JSONObject jobsData = new JSONObject(jsonString);
+            JSONObject jobsRawData = new JSONObject(jsonString);
 
-            String timestamp = jobsData.getString("timestamp");
-            int version = jobsData.getInt("version");
-            JSONArray results = jobsData.getJSONArray("jobs");
+            String timestamp = jobsRawData.getString("timestamp");
+            jobsData.timestamp = timestamp;
 
+            int version = jobsRawData.getInt("version");
+            jobsData.version = version;
+
+            JSONArray results = jobsRawData.getJSONArray("jobs");
             for (int i = 0; i < results.length(); i++) {
                 JSONObject result = results.getJSONObject(i);
 
@@ -68,10 +70,8 @@ public class JobsRequest extends Request<ArrayList<Job>> {
                 job.id = jobId;
                 job.title = title;
 
-                cleanResults.add(job);
-
+                jobsData.jobs.add(job);
             }
-
             Log.d(TAG, "data timestamp: "+ timestamp);
 
         } catch (JSONException e) {
@@ -81,13 +81,14 @@ public class JobsRequest extends Request<ArrayList<Job>> {
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
         }
-        return Response.success(cleanResults, HttpHeaderParser.parseCacheHeaders(response));
+
+        return Response.success(jobsData, HttpHeaderParser.parseCacheHeaders(response));
 
 
     }
 
     @Override
-    protected void deliverResponse(ArrayList<Job> response) {
+    protected void deliverResponse(JobsData response) {
         mListener.onResponse(response);
     }
 

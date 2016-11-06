@@ -214,12 +214,12 @@ public class JobListActivity extends AppCompatActivity {
         JobsRequest jobsRequest = new JobsRequest(
 
                 jobsUrl,
-                new Response.Listener<ArrayList<Job>>() {
+                new Response.Listener<JobsData>() {
                     @Override
-                    public void onResponse(ArrayList<Job> jobsResponse) {
+                    public void onResponse(JobsData jobsResponse) {
 
                         //update the jobs database
-                        Jobs.Store(jobsResponse);
+                        Jobs.Store(jobsResponse.jobs);
                         //update the view
                         populateListWithJobs();
 

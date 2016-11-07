@@ -188,27 +188,18 @@ public class JobListActivity extends AppCompatActivity {
         checkForUpdates();
     }
 
-    void showVersionInformation() {
-        try {
-            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            String text = String.format(getResources().getString(R.string.version_toast),
-                    pInfo.versionName,
-                    pInfo.versionCode);
-
-            Toast.makeText(JobListActivity.this, text, Toast.LENGTH_SHORT).show();
-        } catch (PackageManager.NameNotFoundException e) {
-            // do nothing
-        }
+    void startSettingsActivity() {
+        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_version:
-                showVersionInformation();
-                break;
             case R.id.action_feedback:
                 showFeedbackActivity();
+                break;
+            case R.id.action_settings:
+                startSettingsActivity();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

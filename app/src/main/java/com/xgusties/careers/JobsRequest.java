@@ -7,8 +7,6 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.xgusties.careers.Job;
-import com.xgusties.careers.JobsData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,33 +16,33 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class JobsRequest extends Request<JobsData> {
+public class JobsRequest extends Request<JobsResponse> {
 
     private static final String TAG = "Job";
-    private Response.Listener<JobsData> mListener;
+    private Response.Listener<JobsResponse> mListener;
     private String mUrl;
 
-    public JobsRequest(String jobsUrl, Response.Listener<JobsData> listener, Response.ErrorListener errorListener){
+    public JobsRequest(String jobsUrl, Response.Listener<JobsResponse> listener, Response.ErrorListener errorListener){
         super(Method.GET, jobsUrl, errorListener);
         mListener = listener;
     }
 
     @Override
-    protected Response<JobsData> parseNetworkResponse(NetworkResponse response) {
+    protected Response<JobsResponse> parseNetworkResponse(NetworkResponse response) {
 
         int statusCode = response.statusCode;
         Log.d(TAG, "networkresponse statuscode:"+ statusCode);
-        JobsData jobsData = new JobsData();
+        JobsResponse jobsResponse = new JobsResponse();
 
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             JSONObject jobsRawData = new JSONObject(jsonString);
 
             String timestamp = jobsRawData.getString("timestamp");
-            jobsData.timestamp = timestamp;
+            jobsResponse.timestamp = timestamp;
 
             int version = jobsRawData.getInt("version");
-            jobsData.version = version;
+            jobsResponse.version = version;
 
             JSONArray results = jobsRawData.getJSONArray("jobs");
             for (int i = 0; i < results.length(); i++) {
@@ -70,7 +68,7 @@ public class JobsRequest extends Request<JobsData> {
                 job.id = jobId;
                 job.title = title;
 
-                jobsData.jobs.add(job);
+                jobsResponse.jobs.add(job);
             }
             Log.d(TAG, "data timestamp: "+ timestamp);
 
@@ -82,13 +80,13 @@ public class JobsRequest extends Request<JobsData> {
             return Response.error(new ParseError(e));
         }
 
-        return Response.success(jobsData, HttpHeaderParser.parseCacheHeaders(response));
+        return Response.success(jobsResponse, HttpHeaderParser.parseCacheHeaders(response));
 
 
     }
 
     @Override
-    protected void deliverResponse(JobsData response) {
+    protected void deliverResponse(JobsResponse response) {
         mListener.onResponse(response);
     }
 

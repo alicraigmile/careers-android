@@ -3,8 +3,6 @@ package com.xgusties.careers;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
@@ -32,10 +30,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import com.xgusties.careers.LexicographicComparator;
-import com.xgusties.careers.LocationComparator;
-import com.xgusties.careers.NotConnectedToNetworkException;
 
 /**
  * An activity representing a list of Jobs. This activity
@@ -232,9 +226,9 @@ public class JobListActivity extends AppCompatActivity {
         JobsRequest jobsRequest = new JobsRequest(
 
                 jobsUrl,
-                new Response.Listener<JobsData>() {
+                new Response.Listener<JobsResponse>() {
                     @Override
-                    public void onResponse(JobsData jobsResponse) {
+                    public void onResponse(JobsResponse jobsResponse) {
 
                         //update the jobs database
                         Jobs.Store(jobsResponse.jobs);

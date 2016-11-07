@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
+import net.hockeyapp.android.FeedbackManager;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -147,15 +148,7 @@ public class JobListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_list);
 
-        PackageInfo pInfo = null;
-        try {
-            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            String name = pInfo.versionName;
-            int code = pInfo.versionCode;
-            Log.d(TAG, "App Version: " + name + " (" + code + ")");
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        FeedbackManager.register(this);
 
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
@@ -214,11 +207,18 @@ public class JobListActivity extends AppCompatActivity {
             case R.id.action_version:
                 showVersionInformation();
                 break;
+            case R.id.action_feedback:
+                showFeedbackActivity();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
         return true;
+    }
+
+    private void showFeedbackActivity() {
+        FeedbackManager.showFeedbackActivity(JobListActivity.this);
     }
 
     @Override

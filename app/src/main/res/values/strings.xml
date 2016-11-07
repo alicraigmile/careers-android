@@ -2,8 +2,9 @@
     <string name="app_name">Careers</string>
     <string name="title_job_detail">Job Detail</string>
     <string name="not_connected">Not connected</string>
-    <string name="fetch_jobs_failed">Fetch jobs failed</string>
+    <string name="fetch_jobs_failed">Update failed</string>
     <string name="app_label">Careers</string>
     <string name="search_title">Search jobs</string>
     <string name="search_hint">Search jobs</string>
+    <string name="version_toast">Careers v%1$s (%2$d)</string>
 </resources>

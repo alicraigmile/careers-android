@@ -16,6 +16,7 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -192,6 +193,32 @@ public class JobListActivity extends AppCompatActivity {
             mTwoPane = true;
         }
         checkForUpdates();
+    }
+
+    void showVersionInformation() {
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String text = String.format(getResources().getString(R.string.version_toast),
+                    pInfo.versionName,
+                    pInfo.versionCode);
+
+            Toast.makeText(JobListActivity.this, text, Toast.LENGTH_SHORT).show();
+        } catch (PackageManager.NameNotFoundException e) {
+            // do nothing
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_version:
+                showVersionInformation();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true;
     }
 
     @Override

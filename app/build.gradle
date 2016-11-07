@@ -66,7 +66,7 @@ def computeVersionCode() {
  */
 def getUploadNotesParam() {
     //Default value: prettified last 3 commits log
-    def git_notes = ['git', 'log', '-3' ,'--pretty=format:\"%h by %an, %aD %n| Message: >>%s<<%n\"']
+    def git_notes = ['git', 'log', '-3', '--pretty=format:\"%h by %an, %aD %n| Message: >>%s<<%n\"']
     def notes = project.hasProperty('uploadNotes') ? uploadNotes : git_notes.execute().in.text
     println "Upload Notes are set to $notes"
 

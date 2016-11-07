@@ -168,6 +168,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             }
 
+            Preference developerPref = findPreference("developer");
+            developerPref.setSummary(R.string.developer_summary);
+
             setHasOptionsMenu(true);
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences

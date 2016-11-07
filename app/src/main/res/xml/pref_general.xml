@@ -2,8 +2,14 @@
 
     <Preference
         android:defaultValue="true"
+        android:key="developer"
+        android:summary="-"
+        android:title="@string/pref_title_developer" />
+
+    <Preference
+        android:defaultValue="true"
         android:key="version"
-        android:summary="1.0.0 (0)"
+        android:summary="-"
         android:title="@string/pref_title_version" />
 
 </PreferenceScreen>

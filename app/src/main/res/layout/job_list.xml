@@ -14,7 +14,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="uk.co.bbc.careers.JobListActivity"
+        tools:context=".JobListActivity"
         tools:listitem="@layout/job_list_content" />
 
 </android.support.v4.widget.SwipeRefreshLayout>

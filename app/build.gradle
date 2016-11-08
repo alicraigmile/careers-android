@@ -1,15 +1,20 @@
 apply plugin: 'com.android.application'
 
+// Used to set the package version name and version code
+ext.versionMajor = 1
+ext.versionMinor = 1
+ext.versionPoint = 0
+
 android {
     compileSdkVersion 23
     buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
-
     defaultConfig {
-        applicationId "uk.co.bbc.careers"
+        applicationId 'com.xgusties.careers'
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode computeVersionCode()
+        versionName computeVersionName()
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "c70901d110ec4b17839387eceb8608a4"]
     }
     buildTypes {
         release {
@@ -17,6 +22,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
+}
+
+apply plugin: 'de.felixschulze.gradle.hockeyapp'
+
+hockeyapp {
+    apiToken = HOCKEYAPP_API_TOKEN
+    releaseType = 2 // alpha
+    notify = 1 //to notify all testers that can install this app
+    status = 2 //to make the version available for download
+    notes = getUploadNotesParam()
 }
 
 dependencies {
@@ -28,4 +45,30 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.mcxiaoke.volley:library:1.0.17'
+    compile 'net.hockeyapp.android:HockeySDK:4.1.1'
+}
+
+def computeVersionName() {
+    // Basic <major>.<minor>
+    return String.format('%d.%d.%d', versionMajor, versionMinor, versionPoint)
+}
+
+def computeVersionCode() {
+    // Will return Jenkins build #42 (defaults to 0 if not set)
+    return Integer.valueOf(System.env.BUILD_NUMBER ?: 0)
+}
+
+/**
+ * Get latest notes from git to use for build upload
+ * By default if not specified, last 3 commits log will be used
+ *
+ * @return String If param -PuploadNotes is present then return String values or default value
+ */
+def getUploadNotesParam() {
+    //Default value: prettified last 3 commits log
+    def git_notes = ['git', 'log', '-3', '--pretty=format:\"%h by %an, %aD %n| Message: >>%s<<%n\"']
+    def notes = project.hasProperty('uploadNotes') ? uploadNotes : git_notes.execute().in.text
+    println "Upload Notes are set to $notes"
+
+    return notes
 }

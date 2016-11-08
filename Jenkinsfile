@@ -19,5 +19,8 @@ node {
   archiveArtifacts artifacts: 'app/build/outputs/apk/*.apk', fingerprint: true
 
   //stage 'Stage Upload To Fabric'
-  //sh "./gradlew crashlyticsUploadDistribution${flavor}Debug  -PBUILD_NUMBER=${env.BUILD_NUMBER}"
+  //sh "./gradlew crashlyticsUploadDistribution${flavor}Debug -PBUILD_NUMBER=${env.BUILD_NUMBER}"
+
+  stage 'Stage Upload to HockeyApp'
+  sh "./gradlew uploadDebugToHockeyApp -PHOCKEYAPP_API_TOKEN=${env.HOCKEYAPP_API_TOKEN} -PBUILD_NUMBER=${env.BUILD_NUMBER} -PANDROID_BUILD_TOOLS_VERSION=${env.ANDROID_BUILD_TOOLS_VERSION}"
 }

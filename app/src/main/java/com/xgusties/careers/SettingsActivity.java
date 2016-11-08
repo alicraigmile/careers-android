@@ -16,6 +16,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -170,6 +171,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             Preference developerPref = findPreference("developer");
             developerPref.setSummary(R.string.developer_summary);
+
+            Preference generatedPref = findPreference("generated");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            String generatedTimestampString = sdf.format(Jobs.generatedTimestamp);
+            generatedPref.setSummary(generatedTimestampString);
+
+            Preference lastUpdatedPref = findPreference("last_updated");
+            String lastUpdatedTimestampString = sdf.format(Jobs.lastUpdatedTimestamp);
+            lastUpdatedPref.setSummary(lastUpdatedTimestampString);
+
 
             setHasOptionsMenu(true);
 

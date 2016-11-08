@@ -1,15 +1,30 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="@string/pref_category_application">
+
     <Preference
-        android:defaultValue="true"
         android:key="developer"
         android:summary="-"
         android:title="@string/pref_title_developer" />
 
     <Preference
-        android:defaultValue="true"
         android:key="version"
         android:summary="-"
         android:title="@string/pref_title_version" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_dataset">
+
+        <Preference
+            android:key="generated"
+            android:summary="-"
+            android:title="@string/pref_title_generated" />
+
+        <Preference
+            android:key="last_updated"
+            android:summary="-"
+            android:title="@string/pref_title_last_updated" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

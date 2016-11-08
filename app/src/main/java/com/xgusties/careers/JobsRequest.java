@@ -15,6 +15,11 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class JobsRequest extends Request<JobsResponse> {
 
@@ -26,6 +31,15 @@ public class JobsRequest extends Request<JobsResponse> {
         super(Method.GET, jobsUrl, errorListener);
         mListener = listener;
     }
+
+    private Date parseTimestamp(String timestamp) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        Date convertedDate = new Date();
+        convertedDate = dateFormat.parse(timestamp);
+        return convertedDate;
+    }
+
+
 
     @Override
     protected Response<JobsResponse> parseNetworkResponse(NetworkResponse response) {
@@ -39,7 +53,12 @@ public class JobsRequest extends Request<JobsResponse> {
             JSONObject jobsRawData = new JSONObject(jsonString);
 
             String timestamp = jobsRawData.getString("timestamp");
-            jobsResponse.timestamp = timestamp;
+            try {
+                jobsResponse.timestamp = parseTimestamp(timestamp);
+            } catch (ParseException e) {
+                Log.d(TAG, e.toString());
+                //e.printStackTrace();
+            }
 
             int version = jobsRawData.getInt("version");
             jobsResponse.version = version;
@@ -70,12 +89,10 @@ public class JobsRequest extends Request<JobsResponse> {
 
                 jobsResponse.jobs.add(job);
             }
-            Log.d(TAG, "data timestamp: "+ timestamp);
-
         } catch (JSONException e) {
-            e.printStackTrace();
+            return Response.error(new ParseError(e));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            return Response.error(new ParseError(e));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
         }

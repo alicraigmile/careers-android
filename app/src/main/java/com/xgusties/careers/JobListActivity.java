@@ -230,8 +230,8 @@ public class JobListActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JobsResponse jobsResponse) {
 
-                        //update the jobs database
-                        Jobs.Store(jobsResponse.jobs);
+                        //update the local jobs cache
+                        Jobs.Store(jobsResponse.jobs, jobsResponse.timestamp);
                         //update the view
                         populateListWithJobs();
 

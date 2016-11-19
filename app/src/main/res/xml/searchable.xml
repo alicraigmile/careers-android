@@ -3,5 +3,7 @@
     android:label="@string/app_label"
     android:hint="@string/search_hint"
     android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
-    android:queryAfterZeroResults="false">
+    android:queryAfterZeroResults="false"
+    android:searchSuggestAuthority="com.xgusties.careers.JobSearchSuggestionProvider    "
+    android:searchSuggestSelection=" ?" >
 </searchable>

@@ -43,6 +43,9 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
+
+        <provider android:name=".JobSearchSuggestionProvider"
+            android:authorities="com.xgusties.careers.JobSearchSuggestionProvider" />
     </application>
 
 </manifest>

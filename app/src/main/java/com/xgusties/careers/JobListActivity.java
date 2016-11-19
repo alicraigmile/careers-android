@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -144,11 +145,17 @@ public class JobListActivity extends AppCompatActivity {
 
         FeedbackManager.register(this);
 
-        // Get the intent, verify the action and get the query
+        // when launched with a search query...
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            //get the query
             String query = intent.getStringExtra(SearchManager.QUERY);
             Log.d(TAG, "Search query: " + query);
+            //save thr query to the recent search suggestions
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    JobSearchSuggestionProvider.AUTHORITY, JobSearchSuggestionProvider.MODE);
+            suggestions.saveRecentQuery(query, null);
+            //pass the query onto the view
             mSearchQuery = query;
         }
 
@@ -353,7 +360,6 @@ public class JobListActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private void checkForCrashes() {
         CrashManager.register(this);

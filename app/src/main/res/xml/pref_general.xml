@@ -27,4 +27,14 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_category_search">
+
+        <Preference
+            style="?android:preferenceInformationStyle"
+            android:key="clear_search_history"
+            android:enabled="true"
+            android:title="@string/pref_title_clear_search_history" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

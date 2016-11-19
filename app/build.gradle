@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 // Used to set the package version name and version code
 ext.versionMajor = 1
-ext.versionMinor = 1
+ext.versionMinor = 2
 ext.versionPoint = 0
 
 android {

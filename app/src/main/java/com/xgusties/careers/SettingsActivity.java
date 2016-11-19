@@ -11,9 +11,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.provider.SearchRecentSuggestions;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.text.SimpleDateFormat;
@@ -31,9 +33,19 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends AppCompatPreferenceActivity {
 
+public class SettingsActivity extends AppCompatPreferenceActivity implements ActivityCommunicator {
+
+    private static final String TAG = "Settings activity";
     public static final String ARG_VERSION_STRING = "version_string";
+
+    @Override
+    public void clearSearchHistory() {
+        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                JobSearchSuggestionProvider.AUTHORITY, JobSearchSuggestionProvider.MODE);
+        suggestions.clearHistory();
+        Log.d(TAG, "Search history cleared");
+    }
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -61,7 +73,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
         return text;
     }
-
 
     @Override
     public void onHeaderClick(Header header, int position) {
@@ -148,12 +159,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName);
       }
 
+
     /**
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
+    public static class GeneralPreferenceFragment extends PreferenceFragment  {
+
+        private ActivityCommunicator activityCommunicator;
+        private static final String TAG = "SettingsActivity";
+
+        @Override
+        public void onAttach(Context context) {
+            super.onAttach(context);
+            context = getActivity();
+            activityCommunicator =(ActivityCommunicator)context;
+        }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -181,6 +203,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             String lastUpdatedTimestampString = sdf.format(Jobs.lastUpdatedTimestamp);
             lastUpdatedPref.setSummary(lastUpdatedTimestampString);
 
+            Preference p = findPreference("clear_search_history");
+            p.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Log.d(TAG, "clear_search_history clicked");
+                    activityCommunicator.clearSearchHistory();
+                    return false;
+                }
+            });
 
             setHasOptionsMenu(true);
 
@@ -201,8 +232,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
-
     }
-
 
 }
